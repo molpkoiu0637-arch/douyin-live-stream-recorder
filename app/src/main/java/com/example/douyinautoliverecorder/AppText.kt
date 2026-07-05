@@ -8,7 +8,44 @@ object AppText {
         return locales.size() > 0 && locales[0].language.startsWith("zh")
     }
 
-    fun appTitle(@Suppress("UNUSED_PARAMETER") context: Context) = "Douyin Live Auto Recorder"
+    fun appTitle(context: Context) = if (zh(context)) "抖音录播" else "Douyin Recorder"
+    fun heroRunning(context: Context) = if (zh(context)) "监控运行中" else "Monitoring"
+    fun heroStopped(context: Context) = if (zh(context)) "监控已停止" else "Monitoring stopped"
+    fun heroRunningSub(context: Context, intervalSeconds: Int, window: String?): String {
+        return if (zh(context)) {
+            "每 $intervalSeconds 秒检查" + (window?.let { " · 时段 $it" } ?: "")
+        } else {
+            "Check every ${intervalSeconds}s" + (window?.let { " · window $it" } ?: "")
+        }
+    }
+    fun heroStoppedSub(context: Context) = if (zh(context)) "点击开始监控已启用的房间" else "Tap to start monitoring enabled rooms"
+    fun statRecording(context: Context, count: Int) = if (zh(context)) "$count 录制中" else "$count recording"
+    fun statLive(context: Context, count: Int) = if (zh(context)) "$count 直播中" else "$count live"
+    fun statOffline(context: Context, count: Int) = if (zh(context)) "$count 离线" else "$count offline"
+    fun roomsCount(context: Context, count: Int) = if (zh(context)) "房间 · $count 个" else "Rooms · $count"
+    fun sectionMonitor(context: Context) = if (zh(context)) "监控" else "Monitoring"
+    fun sectionRecording(context: Context) = if (zh(context)) "录制" else "Recording"
+    fun sectionStorage(context: Context) = if (zh(context)) "存储" else "Storage"
+    fun sectionAlerts(context: Context) = if (zh(context)) "提醒" else "Alerts"
+    fun qualityOption(context: Context, quality: RecordQuality) = when (quality) {
+        RecordQuality.P1080 -> if (zh(context)) "原画 · 1080P" else "Original · 1080P"
+        RecordQuality.P720 -> if (zh(context)) "超清 · 720P" else "High · 720P"
+        RecordQuality.P480 -> if (zh(context)) "高清 · 480P" else "Medium · 480P"
+        RecordQuality.P360 -> if (zh(context)) "标清 · 360P" else "Low · 360P"
+    }
+    fun bitrateOption(context: Context, bitrate: BitratePreset) = when (bitrate) {
+        BitratePreset.MBPS_16 -> if (zh(context)) "16 Mbps · 最高" else "16 Mbps · Max"
+        BitratePreset.MBPS_8 -> if (zh(context)) "8 Mbps · 推荐" else "8 Mbps · Recommended"
+        BitratePreset.MBPS_4 -> if (zh(context)) "4 Mbps · 标准" else "4 Mbps · Standard"
+        BitratePreset.MBPS_2 -> if (zh(context)) "2 Mbps · 省空间" else "2 Mbps · Space saver"
+    }
+    fun intervalValue(context: Context, seconds: Int) = if (zh(context)) "$seconds 秒" else "${seconds}s"
+    fun intervalDialogHint(context: Context) = if (zh(context)) "范围 10-600 秒" else "Range 10-600 seconds"
+    fun savingLabel(context: Context) = if (zh(context)) "保存中" else "Saving"
+    fun saveProgress(context: Context, percent: Int) = if (zh(context)) "保存进度: $percent%" else "Save progress: $percent%"
+    fun roomWindowLabel(context: Context) = if (zh(context)) "单独时段" else "Room window"
+    fun confirm(context: Context) = if (zh(context)) "确定" else "OK"
+    fun cancel(context: Context) = if (zh(context)) "取消" else "Cancel"
     fun startMonitoring(context: Context) = if (zh(context)) "\u5f00\u59cb\u76d1\u63a7" else "Start Monitoring"
     fun stopMonitoring(context: Context) = if (zh(context)) "\u505c\u6b62\u76d1\u63a7" else "Stop Monitoring"
     fun running(context: Context) = if (zh(context)) "\u8fd0\u884c\u4e2d" else "Running"
