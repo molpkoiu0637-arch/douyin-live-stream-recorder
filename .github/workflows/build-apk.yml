@@ -14,16 +14,22 @@ jobs:
 
       - name: Accept Android Licenses
         run: |
-          # ยอมรับ license แบบอัตโนมัติทั้งหมด
+          export ANDROID_HOME=$ANDROID_SDK_ROOT
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+          echo "y" | sdkmanager --licenses || true
           yes | sdkmanager --licenses || true
-          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0" || true
+          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Build APK
         run: |
+          ls -la
           chmod +x ./gradlew || true
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - uses: actions/upload-artifact@v4
         with:
           name: douyin-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            **/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
